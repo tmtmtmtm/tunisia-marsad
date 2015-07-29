@@ -21,7 +21,7 @@ def gender_from(text)
   raise "Unknown gender: #{text}"
 end
 
-def scrape_list(url)
+def scrape_list(url, term)
   noko = noko_for(url)
   noko.css('a.depute').each do |a|
     data = { 
@@ -33,7 +33,7 @@ def scrape_list(url)
       faction_id: a.attr('data-groupe_id'),
       area: a.attr('data-region'),
       gender: gender_from(a.attr('sexe')),
-      term: '2014',
+      term: term,
       source: url,
     }
     data[:image] = URI.join(url, URI.escape(data[:image])).to_s unless data[:image].to_s.empty?
@@ -42,4 +42,11 @@ def scrape_list(url)
   end
 end
 
-scrape_list('http://majles.marsad.tn/2014/fr/assemblee')
+terms = { 
+  '2011' => 'http://majles.marsad.tn/fr/assemblee',
+  '2014' => 'http://majles.marsad.tn/2014/fr/assemblee',
+}
+
+terms.each do |term, url|
+  scrape_list(url, term)
+end
