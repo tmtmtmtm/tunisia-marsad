@@ -32,7 +32,7 @@ def scrape_list(url, term)
       faction: a.attr('data-bloc'),
       faction_id: a.attr('data-groupe_id'),
       area: a.attr('data-region'),
-      gender: gender_from(a.attr('sexe')),
+      gender: gender_from(a.attr('data-sexe')),
       term: term,
       source: url,
     }
