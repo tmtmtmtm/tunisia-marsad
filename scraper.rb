@@ -37,7 +37,6 @@ def scrape_list(url, term)
       source: url,
     }
     data[:image] = URI.join(url, URI.escape(data[:image])).to_s unless data[:image].to_s.empty?
-    puts data
     ScraperWiki.save_sqlite([:id, :term], data)
   end
 end
