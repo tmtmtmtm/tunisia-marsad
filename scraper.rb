@@ -2,43 +2,65 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'scraperwiki'
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
+require 'scraped'
+require 'scraperwiki'
 
 # require 'open-uri/cached'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
 
-def noko_for(url)
-  Nokogiri::HTML(open(url).read)
+class MemberLink < Scraped::HTML
+  field :id do
+    noko.attr('data-siege')
+  end
+
+  field :name do
+    noko.attr('data-nom')
+  end
+
+  field :image do
+    URI.join(url, URI.escape(noko.attr('data-photo').to_s.sub('.thumb50', ''))).to_s
+  end
+
+  field :partylist do
+    noko.attr('data-liste')
+  end
+
+  field :faction do
+    noko.attr('data-bloc')
+  end
+
+  field :faction_id do
+    noko.attr('data-groupe_id')
+  end
+
+  field :area do
+    noko.attr('data-region')
+  end
+
+  field :gender do
+    gender = noko.attr('data-sexe')
+    return if gender.to_s.empty?
+    return 'male' if gender == 'Hommes'
+    return 'female' if gender == 'Femmes'
+    raise "Unknown gender: #{gender}"
+  end
+
+  field :source do
+    noko.attr('href')
+  end
 end
 
-def gender_from(text)
-  return if text.to_s.empty?
-  return 'male' if text == 'Hommes'
-  return 'female' if text == 'Femmes'
-  raise "Unknown gender: #{text}"
-end
+class MembersPage < Scraped::HTML
+  decorator Scraped::Response::Decorator::AbsoluteUrls
 
-def scrape_list(url, term)
-  noko = noko_for(url)
-  noko.css('a.depute').each do |a|
-    data = {
-      id:         a.attr('data-siege'),
-      name:       a.attr('data-nom'),
-      image:      a.attr('data-photo').to_s.sub('.thumb50', ''),
-      partylist:  a.attr('data-liste'),
-      faction:    a.attr('data-bloc'),
-      faction_id: a.attr('data-groupe_id'),
-      area:       a.attr('data-region'),
-      gender:     gender_from(a.attr('data-sexe')),
-      term:       term,
-      source:     url,
-    }
-    data[:image] = URI.join(url, URI.escape(data[:image])).to_s unless data[:image].to_s.empty?
-    ScraperWiki.save_sqlite(%i(id term), data)
+  field :members do
+    noko.css('a.depute').map do |a|
+      fragment a => MemberLink
+    end
   end
 end
 
@@ -48,5 +70,10 @@ terms = {
 }
 
 terms.each do |term, url|
-  scrape_list(url, term)
+  page = MembersPage.new(response: Scraped::Request.new(url: url).response)
+  page.members.each do |mem|
+    data = mem.to_h.merge(term: term)
+    # puts data
+    ScraperWiki.save_sqlite(%i(id term), data)
+  end
 end
