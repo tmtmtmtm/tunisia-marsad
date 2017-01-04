@@ -19,35 +19,58 @@ def gender_from(text)
   raise "Unknown gender: #{text}"
 end
 
-class MembersPage < Scraped::HTML
-  field :members do
-    noko.css('a.depute').map do |a|
-      data = {
-        id:         a.attr('data-siege'),
-        name:       a.attr('data-nom'),
-        image:      a.attr('data-photo').to_s.sub('.thumb50', ''),
-        partylist:  a.attr('data-liste'),
-        faction:    a.attr('data-bloc'),
-        faction_id: a.attr('data-groupe_id'),
-        area:       a.attr('data-region'),
-        gender:     gender_from(a.attr('data-sexe')),
-        term:       nil,
-        source:     url,
-      }
-      data[:image] = URI.join(url, URI.escape(data[:image])).to_s unless data[:image].to_s.empty?
-      data
-    end
+class MemberLink < Scraped::HTML
+  field :id do
+    noko.attr('data-siege')
+  end
+
+  field :name do
+    noko.attr('data-nom')
+  end
+
+  field :image do
+    URI.join(url, URI.escape(noko.attr('data-photo').to_s.sub('.thumb50', ''))).to_s
+  end
+
+  field :partylist do
+    noko.attr('data-liste')
+  end
+
+  field :faction do
+    noko.attr('data-bloc')
+  end
+
+  field :faction_id do
+    noko.attr('data-groupe_id')
+  end
+
+  field :area do
+    noko.attr('data-region')
+  end
+
+  field :gender do
+    gender_from(noko.attr('data-sexe'))
+  end
+
+  field :source do
+    noko.attr('href')
   end
 end
 
-def noko_for(url)
-  Nokogiri::HTML(open(url).read)
+class MembersPage < Scraped::HTML
+  decorator Scraped::Response::Decorator::AbsoluteUrls
+
+  field :members do
+    noko.css('a.depute').map do |a|
+      fragment a => MemberLink
+    end
+  end
 end
 
 def scrape_list(url, term)
   page = MembersPage.new(response: Scraped::Request.new(url: url).response)
   page.members.each do |mem|
-    data = mem.merge(term: term)
+    data = mem.to_h.merge(term: term)
     # puts data
     ScraperWiki.save_sqlite(%i(id term), data)
   end
