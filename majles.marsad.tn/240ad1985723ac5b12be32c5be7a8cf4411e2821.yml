@@ -1,0 +1,36 @@
+---
+request:
+  method: get
+  uri: http://majles.marsad.tn/fr/assemblee
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - "*/*"
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Server:
+    - nginx/1.10.0
+    Date:
+    - Wed, 04 Jan 2017 16:31:08 GMT
+    Content-Type:
+    - text/html; charset=utf-8
+    Transfer-Encoding:
+    - chunked
+    Connection:
+    - keep-alive
+    Set-Cookie:
+    - session=eyJfaWQiOnsiIGIiOiJZbVV5TkdNM04ySmlNbUUwTkRrM05HVXlPRGc1WkdVNU56ZGlZVGs0WVRRPSJ9fQ.C060zA.g7qQfxUl1eTGDfL1AoeGFij1-nc;
+      HttpOnly; Path=/
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Wed, 04 Jan 2017 16:28:46 GMT
