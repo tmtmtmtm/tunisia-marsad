@@ -12,13 +12,6 @@ require 'scraperwiki'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
 
-def gender_from(text)
-  return if text.to_s.empty?
-  return 'male' if text == 'Hommes'
-  return 'female' if text == 'Femmes'
-  raise "Unknown gender: #{text}"
-end
-
 class MemberLink < Scraped::HTML
   field :id do
     noko.attr('data-siege')
@@ -49,7 +42,11 @@ class MemberLink < Scraped::HTML
   end
 
   field :gender do
-    gender_from(noko.attr('data-sexe'))
+    gender = noko.attr('data-sexe')
+    return if gender.to_s.empty?
+    return 'male' if gender == 'Hommes'
+    return 'female' if gender == 'Femmes'
+    raise "Unknown gender: #{gender}"
   end
 
   field :source do
