@@ -2,18 +2,15 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'scraperwiki'
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
+require 'scraped'
+require 'scraperwiki'
 
 # require 'open-uri/cached'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
-
-def noko_for(url)
-  Nokogiri::HTML(open(url).read)
-end
 
 def gender_from(text)
   return if text.to_s.empty?
@@ -22,22 +19,36 @@ def gender_from(text)
   raise "Unknown gender: #{text}"
 end
 
+class MembersPage < Scraped::HTML
+  field :members do
+    noko.css('a.depute').map do |a|
+      data = {
+        id:         a.attr('data-siege'),
+        name:       a.attr('data-nom'),
+        image:      a.attr('data-photo').to_s.sub('.thumb50', ''),
+        partylist:  a.attr('data-liste'),
+        faction:    a.attr('data-bloc'),
+        faction_id: a.attr('data-groupe_id'),
+        area:       a.attr('data-region'),
+        gender:     gender_from(a.attr('data-sexe')),
+        term:       nil,
+        source:     url,
+      }
+      data[:image] = URI.join(url, URI.escape(data[:image])).to_s unless data[:image].to_s.empty?
+      data
+    end
+  end
+end
+
+def noko_for(url)
+  Nokogiri::HTML(open(url).read)
+end
+
 def scrape_list(url, term)
-  noko = noko_for(url)
-  noko.css('a.depute').each do |a|
-    data = {
-      id:         a.attr('data-siege'),
-      name:       a.attr('data-nom'),
-      image:      a.attr('data-photo').to_s.sub('.thumb50', ''),
-      partylist:  a.attr('data-liste'),
-      faction:    a.attr('data-bloc'),
-      faction_id: a.attr('data-groupe_id'),
-      area:       a.attr('data-region'),
-      gender:     gender_from(a.attr('data-sexe')),
-      term:       term,
-      source:     url,
-    }
-    data[:image] = URI.join(url, URI.escape(data[:image])).to_s unless data[:image].to_s.empty?
+  page = MembersPage.new(response: Scraped::Request.new(url: url).response)
+  page.members.each do |mem|
+    data = mem.merge(term: term)
+    # puts data
     ScraperWiki.save_sqlite(%i(id term), data)
   end
 end
