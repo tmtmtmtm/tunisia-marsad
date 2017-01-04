@@ -67,20 +67,16 @@ class MembersPage < Scraped::HTML
   end
 end
 
-def scrape_list(url, term)
-  page = MembersPage.new(response: Scraped::Request.new(url: url).response)
-  page.members.each do |mem|
-    data = mem.to_h.merge(term: term)
-    # puts data
-    ScraperWiki.save_sqlite(%i(id term), data)
-  end
-end
-
 terms = {
   '2011' => 'http://majles.marsad.tn/fr/assemblee',
   '2014' => 'http://majles.marsad.tn/2014/fr/assemblee',
 }
 
 terms.each do |term, url|
-  scrape_list(url, term)
+  page = MembersPage.new(response: Scraped::Request.new(url: url).response)
+  page.members.each do |mem|
+    data = mem.to_h.merge(term: term)
+    # puts data
+    ScraperWiki.save_sqlite(%i(id term), data)
+  end
 end
