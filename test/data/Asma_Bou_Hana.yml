@@ -1,0 +1,15 @@
+---
+:class: MemberLink
+:url: http://majles.marsad.tn/2014/fr/elus/Asma_Bou_Hana
+# TODO: The image field currently contains the page url
+# TODO: Ensure all available data is captured (issue: #2)
+:to_h:
+  :id:
+  :name:
+  :image: http://majles.marsad.tn/2014/fr/elus/Asma_Bou_Hana
+  :partylist:
+  :faction:
+  :faction_id:
+  :area:
+  :gender:
+  :source:

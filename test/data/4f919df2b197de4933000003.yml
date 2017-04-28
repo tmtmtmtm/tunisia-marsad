@@ -1,0 +1,15 @@
+---
+:class: MemberLink
+:url: http://majles.marsad.tn/fr/deputes/4f919df2b197de4933000003
+# TODO: The image field currently contains the page url
+# TODO: Ensure all available data is captured (issue: #2)
+:to_h:
+  :id: 
+  :name: 
+  :image: http://majles.marsad.tn/fr/deputes/4f919df2b197de4933000003
+  :partylist: 
+  :faction: 
+  :faction_id: 
+  :area: 
+  :gender: 
+  :source: 
