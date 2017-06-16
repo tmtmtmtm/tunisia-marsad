@@ -20,7 +20,7 @@ response:
     Server:
     - nginx/1.10.0
     Date:
-    - Thu, 15 Jun 2017 14:33:13 GMT
+    - Fri, 16 Jun 2017 18:31:35 GMT
     Content-Type:
     - text/html; charset=utf-8
     Transfer-Encoding:
@@ -28,9 +28,9 @@ response:
     Connection:
     - keep-alive
     Set-Cookie:
-    - session=eyJfaWQiOnsiIGIiOiJNR0kxWm1ObU5qTmpORGM1WVRoa09UZzVOR1l4TVRjeU1UaGpOV1E0WW1ZPSJ9fQ.DCQsKQ.tVTASqRZYXpEbOpn7WXwqtD6e-E;
+    - session=eyJfaWQiOnsiIGIiOiJNR0kxWm1ObU5qTmpORGM1WVRoa09UZzVOR1l4TVRjeU1UaGpOV1E0WW1ZPSJ9fQ.DCW1hw.FrW3dl-7rNQCxIoGzb4bXnCcOCc;
       HttpOnly; Path=/
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Thu, 15 Jun 2017 15:32:00 GMT
+recorded_at: Fri, 16 Jun 2017 19:30:21 GMT
