@@ -63,8 +63,8 @@ class MembersPage < Scraped::HTML
 end
 
 terms = {
-  '2011' => 'http://majles.marsad.tn/fr/assemblee',
-  '2014' => 'http://majles.marsad.tn/2014/fr/assemblee',
+  '2011' => 'https://majles.marsad.tn/fr/assemblee',
+  '2014' => 'https://majles.marsad.tn/2014/fr/assemblee',
 }
 
 terms.each do |term, url|
