@@ -74,6 +74,6 @@ terms.each do |term, url|
   page.members.each do |mem|
     data = mem.to_h.merge(term: term)
     # puts data
-    ScraperWiki.save_sqlite(%i(id term), data)
+    ScraperWiki.save_sqlite(%i[id term], data)
   end
 end
