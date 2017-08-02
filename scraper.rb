@@ -53,7 +53,7 @@ class MemberLink < Scraped::HTML
 end
 
 class MembersPage < Scraped::HTML
-  decorator Scraped::Response::Decorator::AbsoluteUrls
+  decorator Scraped::Response::Decorator::CleanUrls
 
   field :members do
     noko.css('a.depute').map do |a|
