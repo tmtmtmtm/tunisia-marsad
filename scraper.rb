@@ -71,7 +71,7 @@ terms.each do |term, url|
   page = MembersPage.new(response: Scraped::Request.new(url: url).response)
   page.members.each do |mem|
     data = mem.to_h.merge(term: term)
-    # puts data
+    puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
     ScraperWiki.save_sqlite(%i[id term], data)
   end
 end
