@@ -20,7 +20,7 @@ response:
     Server:
     - nginx/1.10.3 (Ubuntu)
     Date:
-    - Sun, 15 Oct 2017 00:03:19 GMT
+    - Mon, 16 Oct 2017 08:01:13 GMT
     Content-Type:
     - text/html; charset=utf-8
     Transfer-Encoding:
@@ -28,9 +28,9 @@ response:
     Connection:
     - keep-alive
     Set-Cookie:
-    - session=eyJfaWQiOnsiIGIiOiJNR0kxWm1ObU5qTmpORGM1WVRoa09UZzVOR1l4TVRjeU1UaGpOV1E0WW1ZPSJ9fQ.DMQ3Rw.dhkWzRFh0YZu-n2FKNs14KkJ2bc;
+    - session=eyJfaWQiOnsiIGIiOiJNR0kxWm1ObU5qTmpORGM1WVRoa09UZzVOR1l4TVRjeU1UaGpOV1E0WW1ZPSJ9fQ.DMX4yQ.3t7r1GRiDHIFMnJapzizeaO25Zw;
       HttpOnly; Path=/
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Sun, 15 Oct 2017 00:03:20 GMT
+recorded_at: Mon, 16 Oct 2017 08:01:13 GMT
