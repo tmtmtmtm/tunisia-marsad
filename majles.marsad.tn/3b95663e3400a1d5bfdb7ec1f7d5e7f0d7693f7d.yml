@@ -20,17 +20,17 @@ response:
     Server:
     - nginx/1.10.3 (Ubuntu)
     Date:
-    - Wed, 26 Dec 2018 18:59:10 GMT
+    - Thu, 27 Dec 2018 12:07:25 GMT
     Content-Type:
     - text/html; charset=utf-8
     Connection:
     - keep-alive
     Set-Cookie:
-    - session=eyJfaWQiOnsiIGIiOiJZMlJqWW1NNFlUQTROMkkzTW1abFlqRTJNV014WmpreVltTTNNamhtTURrPSJ9fQ.DwVg_g.d9FFLVd1FgCvSF9R7yB2KPnBHlc;
+    - session=eyJfaWQiOnsiIGIiOiJZMlJqWW1NNFlUQTROMkkzTW1abFlqRTJNV014WmpreVltTTNNamhtTURrPSJ9fQ.DwZR_Q.iYufFvn3kG83t3tPHE4IbXENTwQ;
       HttpOnly; Path=/
     Content-Length:
     - '19583'
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Wed, 26 Dec 2018 18:59:10 GMT
+recorded_at: Thu, 27 Dec 2018 12:07:25 GMT
